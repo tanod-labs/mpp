@@ -10986,7 +10986,7 @@ export const services: ServiceDef[] = [
     url: "https://tanod.dev",
     serviceUrl: "https://tanod.dev",
     description:
-      "Pay-per-call tools for agents: security scans, crypto and market data, document and PDF conversion, and web pages as Markdown. Failed lookups are not charged.",
+      "Pay-per-call tools for agents: documents and PDFs to Markdown, tables, Word or CSV; crypto and market data; web pages as Markdown; security scans. Failed lookups are not charged.",
     icon: "https://tanod.dev/icon.png",
     categories: ["data", "blockchain", "web"],
     integration: "first-party",
@@ -10998,6 +10998,10 @@ export const services: ServiceDef[] = [
       "market-data",
       "pdf",
       "markdown",
+      "documents",
+      "pdf-tables",
+      "bank-statement",
+      "docx",
     ],
     status: "active",
     docs: {
@@ -11103,6 +11107,60 @@ export const services: ServiceDef[] = [
           },
         },
         desc: "Convert a PDF, DOCX, Excel, PowerPoint, HTML, EPUB or CSV document to Markdown",
+        amount: "5000",
+        unitType: "request",
+      },
+      {
+        route: "POST /v1/pdf/tables",
+        healthCheck: {
+          body: { url: "https://tanod.dev/samples/tables-sample.pdf" },
+        },
+        desc: "Extract the tables in a PDF as JSON, CSV or Excel",
+        amount: "10000",
+        unitType: "request",
+      },
+      {
+        route: "POST /v1/pdf/bank-statement",
+        healthCheck: {
+          body: { url: "https://tanod.dev/samples/statement-sample.pdf" },
+        },
+        desc: "Convert a bank statement PDF to transactions as CSV, Excel, OFX or QIF",
+        amount: "20000",
+        unitType: "request",
+      },
+      {
+        route: "POST /v1/pdf/to-docx",
+        healthCheck: {
+          body: {
+            url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+          },
+        },
+        desc: "Convert a PDF to an editable Word (DOCX) document",
+        amount: "10000",
+        unitType: "request",
+      },
+      {
+        route: "POST /v1/docs/to-pdf",
+        healthCheck: {
+          body: { url: "https://calibre-ebook.com/downloads/demos/demo.docx" },
+        },
+        desc: "Convert a Word, Excel, PowerPoint or OpenDocument file to PDF",
+        amount: "10000",
+        unitType: "request",
+      },
+      {
+        route: "POST /v1/pdf/merge",
+        healthCheck: {
+          body: {
+            inputs: [
+              {
+                url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+              },
+              { url: "https://pdfobject.com/pdf/sample.pdf" },
+            ],
+          },
+        },
+        desc: "Merge several PDFs into one, optionally picking pages from each",
         amount: "5000",
         unitType: "request",
       },
